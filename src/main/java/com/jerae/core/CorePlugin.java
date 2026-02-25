@@ -1,5 +1,6 @@
 package com.jerae.core;
 
+import com.jerae.core.listeners.ChatListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CorePlugin extends JavaPlugin {
@@ -7,7 +8,8 @@ public class CorePlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-
+        saveDefaultConfig();
+        getServer().getPluginManager().registerEvents(new ChatListener(), this);
     }
 
     @Override

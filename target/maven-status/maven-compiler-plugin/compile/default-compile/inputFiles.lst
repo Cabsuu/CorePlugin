@@ -1,1 +1,3 @@
 /app/src/main/java/com/jerae/core/CorePlugin.java
+/app/src/main/java/com/jerae/core/listeners/ChatListener.java
+/app/src/main/java/com/jerae/core/utils/ColorUtil.java

@@ -1,1 +1,3 @@
 com/jerae/core/CorePlugin.class
+com/jerae/core/listeners/ChatListener.class
+com/jerae/core/utils/ColorUtil.class
