@@ -76,4 +76,32 @@ public class ColorUtilTest {
         // Instead it is W...o...r...l...d...
         assertTrue(result.contains("W") && result.contains("o") && result.contains("r") && result.contains("l") && result.contains("d"));
     }
+
+    @Test
+    void testGradientWithFormatBefore() {
+        // &l<#000000:#FFFFFF>Test
+        // Should produce bold characters throughout the gradient
+        String input = "&l<#000000:#FFFFFF>Test";
+        String result = ColorUtil.translate(input, false, false, false, true);
+
+        // Check for §l
+        assertTrue(result.contains("§l"));
+        // Since hex colors reset formatting, §l should appear multiple times (re-applied)
+        // Check if §l appears after a hex code sequence
+        // Hex sequence is §x§.§.§.§.§.§.
+        // So we expect §x...§lT...
+        assertTrue(result.contains("§lT"));
+    }
+
+    @Test
+    void testGradientWithFormatInside() {
+        // <#000000:#FFFFFF>&lTest
+        // The parser should include &l in the gradient processing
+        String input = "<#000000:#FFFFFF>&lTest";
+        String result = ColorUtil.translate(input, false, false, false, true);
+
+        // &l should be applied
+        assertTrue(result.contains("§l"));
+        assertTrue(result.contains("§lT"));
+    }
 }
