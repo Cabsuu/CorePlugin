@@ -1,0 +1,8 @@
+no-permission: "&cYou do not have permission to use this command."
+invalid-characters: "&cYou can only change your nickname with letters and numbers."
+nick-too-long: "&cYour nickname is too long."
+nick-too-long-other: "&cThe nickname is too long."
+nick-changed: "&aYour nickname is now <display name>."
+nick-changed-other: "&a<username>'s nickname is now <display name>."
+nick-reset: "&eYou no longer have a nickname."
+nick-reset-other: "&e<username> no longer has a nickname."

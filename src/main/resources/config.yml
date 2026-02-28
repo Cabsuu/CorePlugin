@@ -2,3 +2,12 @@
 
 # DO NOT CHANGE THIS! #
 Config for minecraft version: 1.21.11
+
+# --- Features --- #
+
+# Character limit you can put in /nick. Players with "cp.nick.bypasslimit" will be ignored.
+nick-character-limit: 16
+# The color codes will be ignored in character-limit.
+ignore-color-codes: false
+# Adds a prefix when a player change their nickname. Players with "cp.nick.hideprefix" won't have this prefix.
+nickname-prefix: '*'
