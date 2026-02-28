@@ -1,1 +1,4 @@
+com/jerae/core/listeners/ConsoleListenerTest.class
+com/jerae/core/listeners/ChatListenerTest.class
 com/jerae/core/CorePluginTest.class
+com/jerae/core/utils/ColorUtilTest.class
