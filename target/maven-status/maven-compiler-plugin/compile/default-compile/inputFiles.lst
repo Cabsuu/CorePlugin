@@ -1,6 +1,8 @@
 /app/src/main/java/com/jerae/core/CorePlugin.java
+/app/src/main/java/com/jerae/core/commands/CoreCommand.java
 /app/src/main/java/com/jerae/core/commands/NickCommand.java
 /app/src/main/java/com/jerae/core/listeners/ChatListener.java
 /app/src/main/java/com/jerae/core/listeners/ConsoleListener.java
 /app/src/main/java/com/jerae/core/utils/ColorUtil.java
+/app/src/main/java/com/jerae/core/utils/ConfigUpdater.java
 /app/src/main/java/com/jerae/core/utils/Messages.java

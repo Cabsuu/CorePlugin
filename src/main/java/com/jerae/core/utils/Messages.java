@@ -20,6 +20,10 @@ public class Messages {
     public Messages(CorePlugin plugin) {
         this.plugin = plugin;
         this.configFile = new File(plugin.getDataFolder(), "messages.yml");
+        reload();
+    }
+
+    public void reload() {
         if (!configFile.exists()) {
             plugin.saveResource("messages.yml", false);
         }
@@ -51,7 +55,7 @@ public class Messages {
             message = message.replace("<username>", targetName);
         }
         if (targetDisplayName != null) {
-            message = message.replace("<display name>", targetDisplayName);
+            message = message.replace("<displayname>", targetDisplayName);
         }
         String translated = ColorUtil.translate(message, true, true, true, true);
         return LegacyComponentSerializer.legacySection().deserialize(translated);

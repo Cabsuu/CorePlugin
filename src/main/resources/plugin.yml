@@ -8,3 +8,5 @@ commands:
   nickname:
     description: Change your nickname or another player's nickname or display name.
     aliases: [nick]
+  cp:
+    description: Core plugin main command.

@@ -43,7 +43,7 @@ class NickCommandTest {
 
         String displayName = PlainTextComponentSerializer.plainText().serialize(player.displayName());
         assertEquals("*NewName", displayName);
-        player.assertSaid("§aYour nickname is now *NewName.");
+        player.assertSaid("§aYour nickname is now *NewName§a.");
     }
 
     @Test
@@ -56,7 +56,7 @@ class NickCommandTest {
 
         String displayName = PlainTextComponentSerializer.plainText().serialize(target.displayName());
         assertEquals("*OtherName", displayName);
-        player.assertSaid("§aTargetPlayer's nickname is now *OtherName.");
+        player.assertSaid("§aTargetPlayer's nickname is now *OtherName§a.");
     }
 
     @Test
