@@ -32,7 +32,7 @@ public class CoreCommand implements CommandExecutor {
             plugin.reloadConfig();
             messages.reload();
 
-            sender.sendMessage("§aCorePlugin configuration reloaded.");
+            sender.sendMessage(messages.get("reload-success"));
             return true;
         }
 
