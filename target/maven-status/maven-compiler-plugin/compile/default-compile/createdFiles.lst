@@ -1,8 +1,0 @@
-com/jerae/core/utils/Messages.class
-com/jerae/core/utils/ConfigUpdater.class
-com/jerae/core/commands/NickCommand.class
-com/jerae/core/CorePlugin.class
-com/jerae/core/utils/ColorUtil.class
-com/jerae/core/listeners/ConsoleListener.class
-com/jerae/core/listeners/ChatListener.class
-com/jerae/core/commands/CoreCommand.class

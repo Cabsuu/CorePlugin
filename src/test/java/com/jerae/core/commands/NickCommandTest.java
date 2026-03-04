@@ -104,4 +104,10 @@ class NickCommandTest {
         String displayName = PlainTextComponentSerializer.plainText().serialize(player.displayName());
         assertEquals("NewName", displayName);
     }
+
+    @Test
+    void testConsoleNoTarget() {
+        server.execute("nick", server.getConsoleSender(), "NewName");
+        server.getConsoleSender().assertSaid("You must specify a player from the console.");
+    }
 }
