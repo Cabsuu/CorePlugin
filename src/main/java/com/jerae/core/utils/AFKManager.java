@@ -6,6 +6,9 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
+import me.neznamy.tab.api.TabAPI;
+import me.neznamy.tab.api.TabPlayer;
+import me.neznamy.tab.api.tablist.TabListFormatManager;
 
 import java.util.Map;
 import java.util.UUID;
@@ -78,12 +81,29 @@ public class AFKManager {
         UUID uuid = player.getUniqueId();
         isAfk.put(uuid, afk);
 
+        boolean hasTab = Bukkit.getPluginManager().getPlugin("TAB") != null;
+        String rawSuffix = plugin.getConfig().getString("afk-suffix", "&7&oAFK");
+        String suffix = ColorUtil.translate(rawSuffix, true, true, true, true);
+
         if (afk) {
-            originalPlayerListNames.put(uuid, player.playerListName());
-            String suffix = plugin.getConfig().getString("afk-suffix", "&7&oAFK");
-            Component suffixComponent = LegacyComponentSerializer.legacySection().deserialize(ColorUtil.translate(suffix, true, true, true, true));
-            Component newListName = player.playerListName().append(Component.space()).append(suffixComponent);
-            player.playerListName(newListName);
+            if (hasTab) {
+                try {
+                    TabPlayer tabPlayer = TabAPI.getInstance().getPlayer(uuid);
+                    if (tabPlayer != null) {
+                        TabListFormatManager formatManager = TabAPI.getInstance().getTabListFormatManager();
+                        if (formatManager != null) {
+                            formatManager.setSuffix(tabPlayer, " " + suffix);
+                        }
+                    }
+                } catch (Exception e) {
+                    plugin.getLogger().warning("Failed to hook into TAB: " + e.getMessage());
+                }
+            } else {
+                originalPlayerListNames.put(uuid, player.playerListName());
+                Component suffixComponent = LegacyComponentSerializer.legacySection().deserialize(suffix);
+                Component newListName = player.playerListName().append(Component.space()).append(suffixComponent);
+                player.playerListName(newListName);
+            }
 
             if (reason != null && !reason.trim().isEmpty()) {
                 Bukkit.broadcast(messages.get("afk-on-reason", player.getName(), player.getName(), reason, null));
@@ -91,11 +111,25 @@ public class AFKManager {
                 Bukkit.broadcast(messages.get("afk-on", player.getName(), player.getName(), null, null));
             }
         } else {
-            Component original = originalPlayerListNames.remove(uuid);
-            if (original != null) {
-                player.playerListName(original);
+            if (hasTab) {
+                try {
+                    TabPlayer tabPlayer = TabAPI.getInstance().getPlayer(uuid);
+                    if (tabPlayer != null) {
+                        TabListFormatManager formatManager = TabAPI.getInstance().getTabListFormatManager();
+                        if (formatManager != null) {
+                            formatManager.setSuffix(tabPlayer, null);
+                        }
+                    }
+                } catch (Exception e) {
+                    plugin.getLogger().warning("Failed to hook into TAB: " + e.getMessage());
+                }
             } else {
-                player.playerListName(player.name());
+                Component original = originalPlayerListNames.remove(uuid);
+                if (original != null) {
+                    player.playerListName(original);
+                } else {
+                    player.playerListName(player.name());
+                }
             }
             Bukkit.broadcast(messages.get("afk-off", player.getName(), player.getName(), null, null));
             lastActivity.put(uuid, System.currentTimeMillis());
