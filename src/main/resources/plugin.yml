@@ -10,3 +10,5 @@ commands:
     aliases: [nick]
   cp:
     description: Core plugin main command.
+  afk:
+    description: Set your status to AFK.

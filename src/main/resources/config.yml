@@ -11,3 +11,10 @@ nick-character-limit: 16
 ignore-color-codes: false
 # Adds a prefix when a player change their nickname. Players with "cp.nick.hideprefix" won't have this prefix.
 nickname-prefix: '*'
+
+# Add cooldown to prevent players to spam the command. Players with "cp.afk.bypasscooldown" will be ignored.
+afk-cooldown: 30
+# Character limit to put the reason of AFK. Players with "cp.afk.bypasslimit" will be ignored.
+afk-reason-character-limit: 64
+afk-auto: 300
+afk-suffix: '&7&oAFK'

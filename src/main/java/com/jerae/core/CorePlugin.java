@@ -19,10 +19,17 @@ public class CorePlugin extends JavaPlugin {
         saveDefaultConfig();
         getServer().getPluginManager().registerEvents(new ChatListener(), this);
         getServer().getPluginManager().registerEvents(new ConsoleListener(), this);
+        getServer().getPluginManager().registerEvents(new com.jerae.core.listeners.PlayerJoinListener(this), this);
 
         Messages messages = new Messages(this);
+        com.jerae.core.utils.AFKManager afkManager = new com.jerae.core.utils.AFKManager(this, messages);
+        getServer().getPluginManager().registerEvents(new com.jerae.core.listeners.PlayerActivityListener(afkManager), this);
+
         if (getCommand("nickname") != null) {
             getCommand("nickname").setExecutor(new NickCommand(this, messages));
+        }
+        if (getCommand("afk") != null) {
+            getCommand("afk").setExecutor(new com.jerae.core.commands.AfkCommand(this, messages, afkManager));
         }
         if (getCommand("cp") != null) {
             getCommand("cp").setExecutor(new CoreCommand(this, messages));
