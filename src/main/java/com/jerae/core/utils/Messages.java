@@ -10,12 +10,15 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Messages {
 
     private final CorePlugin plugin;
     private FileConfiguration config;
     private File configFile;
+    private final Map<String, Component> cache = new ConcurrentHashMap<>();
 
     public Messages(CorePlugin plugin) {
         this.plugin = plugin;
@@ -24,6 +27,7 @@ public class Messages {
     }
 
     public void reload() {
+        cache.clear();
         if (!configFile.exists()) {
             plugin.saveResource("messages.yml", false);
         }
@@ -37,13 +41,15 @@ public class Messages {
     }
 
     public Component get(String key) {
-        String message = config.getString(key);
-        if (message == null) {
-            return Component.text("Message not found: " + key);
-        }
-        // Translate message with all options true since it's the server message
-        String translated = ColorUtil.translate(message, true, true, true, true);
-        return LegacyComponentSerializer.legacySection().deserialize(translated);
+        return cache.computeIfAbsent(key, k -> {
+            String message = config.getString(k);
+            if (message == null) {
+                return Component.text("Message not found: " + k);
+            }
+            // Translate message with all options true since it's the server message
+            String translated = ColorUtil.translate(message, true, true, true, true);
+            return LegacyComponentSerializer.legacySection().deserialize(translated);
+        });
     }
 
     public Component get(String key, String targetName, String targetDisplayName) {
