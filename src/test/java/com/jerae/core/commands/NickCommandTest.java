@@ -4,13 +4,13 @@ import org.mockbukkit.mockbukkit.MockBukkit;
 import org.mockbukkit.mockbukkit.ServerMock;
 import org.mockbukkit.mockbukkit.entity.PlayerMock;
 import com.jerae.core.CorePlugin;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class NickCommandTest {
 
@@ -43,7 +43,9 @@ class NickCommandTest {
 
         String displayName = PlainTextComponentSerializer.plainText().serialize(player.displayName());
         assertEquals("*NewName", displayName);
-        player.assertSaid("§aYour nickname is now *NewName§a.");
+
+        String serialized = LegacyComponentSerializer.legacySection().serialize(player.nextComponentMessage());
+        assertEquals("§aYour nickname is now *NewName.", serialized);
     }
 
     @Test
@@ -56,7 +58,9 @@ class NickCommandTest {
 
         String displayName = PlainTextComponentSerializer.plainText().serialize(target.displayName());
         assertEquals("*OtherName", displayName);
-        player.assertSaid("§aTargetPlayer's nickname is now *OtherName§a.");
+
+        String serialized = LegacyComponentSerializer.legacySection().serialize(player.nextComponentMessage());
+        assertEquals("§aTargetPlayer's nickname is now *OtherName.", serialized);
     }
 
     @Test

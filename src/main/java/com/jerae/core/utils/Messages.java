@@ -2,6 +2,7 @@ package com.jerae.core.utils;
 
 import com.jerae.core.CorePlugin;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextReplacementConfig;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -51,13 +52,27 @@ public class Messages {
         if (message == null) {
             return Component.text("Message not found: " + key);
         }
+
+        // Translate the static template first
+        String translatedTemplate = ColorUtil.translate(message, true, true, true, true);
+        Component component = LegacyComponentSerializer.legacySection().deserialize(translatedTemplate);
+
+        // Replace placeholders with un-evaluated user inputs (deserialized as legacy to preserve formatting but prevent injection)
         if (targetName != null) {
-            message = message.replace("<username>", targetName);
+            Component replacement = LegacyComponentSerializer.legacySection().deserialize(targetName);
+            component = component.replaceText(TextReplacementConfig.builder()
+                    .matchLiteral("<username>")
+                    .replacement(replacement)
+                    .build());
         }
         if (targetDisplayName != null) {
-            message = message.replace("<displayname>", targetDisplayName);
+            Component replacement = LegacyComponentSerializer.legacySection().deserialize(targetDisplayName);
+            component = component.replaceText(TextReplacementConfig.builder()
+                    .matchLiteral("<displayname>")
+                    .replacement(replacement)
+                    .build());
         }
-        String translated = ColorUtil.translate(message, true, true, true, true);
-        return LegacyComponentSerializer.legacySection().deserialize(translated);
+
+        return component;
     }
 }

@@ -1,6 +1,0 @@
-/app/src/test/java/com/jerae/core/CorePluginTest.java
-/app/src/test/java/com/jerae/core/commands/CoreCommandTest.java
-/app/src/test/java/com/jerae/core/commands/NickCommandTest.java
-/app/src/test/java/com/jerae/core/listeners/ChatListenerTest.java
-/app/src/test/java/com/jerae/core/listeners/ConsoleListenerTest.java
-/app/src/test/java/com/jerae/core/utils/ColorUtilTest.java
