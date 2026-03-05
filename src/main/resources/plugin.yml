@@ -4,9 +4,12 @@ main: com.jerae.core.CorePlugin
 api-version: '1.21'
 authors: [ Jerae ]
 description: Just a plugin.
+softdepend: [ TAB ]
 commands:
   nickname:
     description: Change your nickname or another player's nickname or display name.
     aliases: [nick]
   cp:
     description: Core plugin main command.
+  afk:
+    description: Set your status to AFK.

@@ -81,4 +81,25 @@ public class Messages {
 
         return component;
     }
+
+    public Component get(String key, String targetName, String targetDisplayName, String afkReason, String afkCooldown) {
+        Component component = get(key, targetName, targetDisplayName);
+
+        if (afkReason != null) {
+            Component replacement = LegacyComponentSerializer.legacySection().deserialize(afkReason);
+            component = component.replaceText(TextReplacementConfig.builder()
+                    .matchLiteral("<afkreason>")
+                    .replacement(replacement)
+                    .build());
+        }
+        if (afkCooldown != null) {
+            Component replacement = LegacyComponentSerializer.legacySection().deserialize(afkCooldown);
+            component = component.replaceText(TextReplacementConfig.builder()
+                    .matchLiteral("<afkcooldown>")
+                    .replacement(replacement)
+                    .build());
+        }
+
+        return component;
+    }
 }

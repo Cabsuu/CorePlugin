@@ -96,6 +96,7 @@ public class NickCommand implements CommandExecutor {
 
         if (reset) {
             target.displayName(net.kyori.adventure.text.Component.text(target.getName()));
+            target.getPersistentDataContainer().remove(new org.bukkit.NamespacedKey(plugin, "nickname"));
             if (target == sender) {
                 sender.sendMessage(messages.get("nick-reset"));
             } else {
@@ -145,6 +146,7 @@ public class NickCommand implements CommandExecutor {
 
             net.kyori.adventure.text.Component displayComponent = net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection().deserialize(finalTranslated);
             target.displayName(displayComponent);
+            target.getPersistentDataContainer().set(new org.bukkit.NamespacedKey(plugin, "nickname"), org.bukkit.persistence.PersistentDataType.STRING, finalTranslated);
 
             if (target == sender) {
                 sender.sendMessage(messages.get("nick-changed", target.getName(), finalTranslated));

@@ -6,11 +6,15 @@ import org.mockbukkit.mockbukkit.entity.PlayerMock;
 import com.jerae.core.CorePlugin;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.bukkit.NamespacedKey;
+import org.bukkit.persistence.PersistentDataType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class NickCommandTest {
 
@@ -46,6 +50,10 @@ class NickCommandTest {
 
         String serialized = LegacyComponentSerializer.legacySection().serialize(player.nextComponentMessage());
         assertEquals("§aYour nickname is now *NewName.", serialized);
+
+        NamespacedKey key = new NamespacedKey(plugin, "nickname");
+        assertTrue(player.getPersistentDataContainer().has(key, PersistentDataType.STRING));
+        assertEquals("*NewName", player.getPersistentDataContainer().get(key, PersistentDataType.STRING));
     }
 
     @Test
@@ -97,6 +105,9 @@ class NickCommandTest {
         String displayName = PlainTextComponentSerializer.plainText().serialize(player.displayName());
         assertEquals("TestPlayer", displayName);
         player.assertSaid("§eYou no longer have a nickname.");
+
+        NamespacedKey key = new NamespacedKey(plugin, "nickname");
+        assertFalse(player.getPersistentDataContainer().has(key, PersistentDataType.STRING));
     }
 
     @Test
