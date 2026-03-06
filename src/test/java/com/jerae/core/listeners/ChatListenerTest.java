@@ -30,7 +30,7 @@ class ChatListenerTest {
     public void setUp() {
         server = MockBukkit.mock();
         plugin = MockBukkit.load(CorePlugin.class);
-        listener = new ChatListener();
+        listener = new ChatListener(plugin);
         server.getPluginManager().registerEvents(listener, plugin);
     }
 

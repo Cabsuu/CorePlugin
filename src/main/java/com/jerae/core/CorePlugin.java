@@ -6,6 +6,8 @@ import com.jerae.core.listeners.ChatListener;
 import com.jerae.core.listeners.ConsoleListener;
 import com.jerae.core.utils.ConfigUpdater;
 import com.jerae.core.utils.Messages;
+import com.jerae.core.commands.ChatColorCommand;
+import com.jerae.core.listeners.ChatColorListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CorePlugin extends JavaPlugin {
@@ -17,11 +19,13 @@ public class CorePlugin extends JavaPlugin {
         ConfigUpdater.updateConfig(this, "messages.yml");
 
         saveDefaultConfig();
-        getServer().getPluginManager().registerEvents(new ChatListener(), this);
+        getServer().getPluginManager().registerEvents(new ChatListener(this), this);
         getServer().getPluginManager().registerEvents(new ConsoleListener(), this);
         getServer().getPluginManager().registerEvents(new com.jerae.core.listeners.PlayerJoinListener(this), this);
 
         Messages messages = new Messages(this);
+
+        getServer().getPluginManager().registerEvents(new ChatColorListener(this, messages), this);
         com.jerae.core.utils.AFKManager afkManager = new com.jerae.core.utils.AFKManager(this, messages);
         getServer().getPluginManager().registerEvents(new com.jerae.core.listeners.PlayerActivityListener(afkManager), this);
 
@@ -33,6 +37,9 @@ public class CorePlugin extends JavaPlugin {
         }
         if (getCommand("cp") != null) {
             getCommand("cp").setExecutor(new CoreCommand(this, messages));
+        }
+        if (getCommand("chatcolor") != null) {
+            getCommand("chatcolor").setExecutor(new ChatColorCommand(this, messages));
         }
     }
 

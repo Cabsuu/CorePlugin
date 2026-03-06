@@ -13,3 +13,6 @@ commands:
     description: Core plugin main command.
   afk:
     description: Set your status to AFK.
+  chatcolor:
+    description: Open the chatcolor GUI to set your chat color.
+    aliases: [cc]
